@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group ='uk.co.imrichardcole'
+version = '0.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -11,6 +12,12 @@ dependencies {
     compile 'com.typesafe:config:1.3.1'
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
+}
+
+jar {
+    manifest {
+        attributes 'Premain-Class': 'uk.co.imrichardcole.butler.agent.ButlerAgent'
+    }
 }
 
 task wrapper(type: Wrapper) {

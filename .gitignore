@@ -2,6 +2,8 @@
 build/
 out/
 
+*.csv
+
 butler.iws
 butler.ipr
 butler.iml
