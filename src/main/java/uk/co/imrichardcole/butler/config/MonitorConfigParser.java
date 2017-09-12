@@ -1,19 +1,17 @@
-package uk.co.imrichardcole.butler;
+package uk.co.imrichardcole.butler.config;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import org.junit.Test;
 
-import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ConfigTest {
+public class MonitorConfigParser {
 
-    @Test
-    public void can_load_config() {
-        final Config monitorConfig = ConfigFactory.load("example.conf");
-        final List<MonitorConfig> monitors = monitorConfig.getConfigList("monitors")
+    public Map<String, MonitorConfig> parse(final String configFileName) {
+        final Config rawConfig = ConfigFactory.load(configFileName);
+        return rawConfig.getConfigList("monitors")
                 .stream()
                 .map((Function<Config, MonitorConfig>) config -> {
                     final String monitorName = config.getString("name");
@@ -21,8 +19,7 @@ public class ConfigTest {
                     final long outputFrequencyMillis = config.getLong("output.frequency");
                     final String objectName = config.getString("object.name");
                     return new MonitorConfig(monitorName, fileName, outputFrequencyMillis, objectName);
-                }).collect(Collectors.toList());
-        System.out.println();
+                }).collect(Collectors.toMap(MonitorConfig::getMonitorName, Function.identity()));
     }
 
 }

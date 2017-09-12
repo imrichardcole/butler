@@ -1,4 +1,4 @@
-package uk.co.imrichardcole.butler;
+package uk.co.imrichardcole.butler.config;
 
 public class MonitorConfig {
 
@@ -7,7 +7,7 @@ public class MonitorConfig {
     private final long outputFrequencyMillis;
     private final String objectName;
 
-    MonitorConfig(String monitorName, String fileName, long outputFrequencyMillis, String objectName) {
+    public MonitorConfig(String monitorName, String fileName, long outputFrequencyMillis, String objectName) {
         this.monitorName = monitorName;
         this.fileName = fileName;
         this.outputFrequencyMillis = outputFrequencyMillis;
