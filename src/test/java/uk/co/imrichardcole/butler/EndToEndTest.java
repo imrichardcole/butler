@@ -16,7 +16,7 @@ public class EndToEndTest {
     @Test
     public void wire_it_all_up() throws InterruptedException {
         final MonitorConfigParser parser = new MonitorConfigParser();
-        final Map<String, MonitorConfig> config = parser.parse("example.conf");
+        final Map<String, MonitorConfig> config = parser.parse("basic-example.conf");
         final ExecutorService service = Executors.newFixedThreadPool(2);
         for (String monitorName : config.keySet()) {
             final MonitorConfig monitorConfig = config.get(monitorName);
@@ -24,7 +24,7 @@ public class EndToEndTest {
             final CSVFileWriter fileWriter = new CSVFileWriter(monitorConfig.getFileName());
             service.submit(new TimedMonitor(monitorConfig.getOutputFrequencyMillis(), jmxMonitor, fileWriter));
         }
-        service.awaitTermination(5000, TimeUnit.SECONDS);
+        service.awaitTermination(20, TimeUnit.SECONDS);
     }
 
 }

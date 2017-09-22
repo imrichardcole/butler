@@ -12,7 +12,7 @@ public class MonitorConfigParserTest {
     @Test
     public void can_load_config_from_file() {
         final MonitorConfigParser parser = new MonitorConfigParser();
-        final Map<String, MonitorConfig> configMap = parser.parse("example.conf");
+        final Map<String, MonitorConfig> configMap = parser.parse("basic-example.conf");
         assertThat(configMap.size(), equalTo(2));
 
         final MonitorConfig memoryMonitorConfig = configMap.get("JMX memory logger");

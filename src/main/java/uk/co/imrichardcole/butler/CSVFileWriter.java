@@ -7,6 +7,7 @@ import java.util.Map;
 public class CSVFileWriter {
 
     private final String fileName;
+    private boolean writtenHeaderRows = false;
 
     public CSVFileWriter(String fileName) {
         this.fileName = fileName;
@@ -17,11 +18,19 @@ public class CSVFileWriter {
             final FileWriter fileWriter = getFileWriter();
             final int size = values.size();
             int columnCounter = 1;
+            if(!writtenHeaderRows) {
+                final String headerRow = String.join(",", values.keySet());
+                fileWriter.write(headerRow);
+                writeNewLine(fileWriter);
+                writtenHeaderRows = true;
+            }
             for (String key : values.keySet()) {
                 final Object object = values.get(key);
-                fileWriter.write(object.toString());
-                if(size != columnCounter) {
-                    fileWriter.write(",");
+                if(object != null) {
+                    fileWriter.write(object.toString());
+                    if (size != columnCounter) {
+                        fileWriter.write(",");
+                    }
                 }
                 columnCounter++;
             }
